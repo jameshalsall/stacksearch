@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var app = require('commander');
+var searcher = require('../lib/searcher.js').searcher;
+var streamer = require('../lib/output-renderer.js').outputRenderer;
+var dns = require('dns');
+
+var options = {
+    accepted_only: false
+};
+
+app.version('0.0.1-BETA')
+   .option('-u, --show-unanswered', 'Set to true to show unanswered questions')
+   .option('-n, --limit', 'Only return n results, defaults to 5')
+   .parse(process.argv)
+;
+
+app.prompt('Please enter a question: ', function(question) {
+    searcher.search(question, app.limit, app.acceptedOnly);
+});
